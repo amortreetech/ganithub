@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, Mail, Lock, BookOpen, Calculator, Star } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  BookOpen,
+  Calculator,
+  Star,
+} from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -23,15 +37,15 @@ const Login = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
-    setError('');
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     const result = await login(formData.email, formData.password);
 
@@ -39,20 +53,20 @@ const Login = () => {
       // Redirect based on user role
       const role = result.user.role;
       switch (role) {
-        case 'admin':
-          navigate('/admin');
+        case "admin":
+          navigate("/admin");
           break;
-        case 'tutor':
-          navigate('/tutor');
+        case "tutor":
+          navigate("/tutor");
           break;
-        case 'student':
-          navigate('/student');
+        case "student":
+          navigate("/student");
           break;
-        case 'parent':
-          navigate('/parent');
+        case "parent":
+          navigate("/parent");
           break;
         default:
-          navigate('/');
+          navigate("/");
       }
     } else {
       setError(result.message);
@@ -93,7 +107,9 @@ const Login = () => {
 
         <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl font-bold text-gray-800">Welcome Back!</CardTitle>
+            <CardTitle className="text-2xl font-bold text-gray-800">
+              Welcome Back!
+            </CardTitle>
             <CardDescription className="text-gray-600">
               Sign in to continue your math learning journey
             </CardDescription>
@@ -113,7 +129,7 @@ const Login = () => {
                   Email Address
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Mail className="absolute left-3 top-4 h-4 w-4 text-gray-400" />
                   <Input
                     id="email"
                     name="email"
@@ -132,11 +148,11 @@ const Login = () => {
                   Password
                 </Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Lock className="absolute left-3 top-4 h-4 w-4 text-gray-400" />
                   <Input
                     id="password"
                     name="password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={handleChange}
@@ -146,7 +162,7 @@ const Login = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-4 text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
@@ -173,14 +189,14 @@ const Login = () => {
                     <span>Signing in...</span>
                   </div>
                 ) : (
-                  'Sign In'
+                  "Sign In"
                 )}
               </Button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-gray-600">
-                Don't have an account?{' '}
+                Don't have an account?{" "}
                 <Link
                   to="/register"
                   className="text-blue-600 hover:text-blue-800 font-medium hover:underline"
@@ -192,7 +208,9 @@ const Login = () => {
 
             {/* Demo accounts */}
             <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-              <p className="text-sm font-medium text-gray-700 mb-2">Demo Accounts:</p>
+              <p className="text-sm font-medium text-gray-700 mb-2">
+                Demo Accounts:
+              </p>
               <div className="text-xs text-gray-600 space-y-1">
                 <div>Admin: admin@ganithub.com / password123</div>
                 <div>Student: student1@ganithub.com / password123</div>
@@ -208,4 +226,3 @@ const Login = () => {
 };
 
 export default Login;
-
